@@ -135,9 +135,8 @@
 		CE825C1A2A77BD7A0043A672 /* ProductCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF58D4C2A5EB4EC00C046A1 /* ProductCardView.swift */; };
 		CE825C1B2A77BD840043A672 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF58D282A5E757000C046A1 /* Response.swift */; };
 		CE825C1C2A77BD840043A672 /* Pagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF58D2A2A5E759800C046A1 /* Pagination.swift */; };
+		CEA9B8302A79049000FEA77B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEAC0D8A2A5D078E006C022F /* Assets.xcassets */; };
 		CEAA7D002A776EE500558188 /* ApiBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAA7CFF2A776EE500558188 /* ApiBase.swift */; };
-		CEAA7D022A7793DC00558188 /* dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAA7D012A7793DC00558188 /* dummy.swift */; };
-		CEAA7D092A77B80B00558188 /* Extentions in Resources */ = {isa = PBXBuildFile; fileRef = CEAA7D082A77B80B00558188 /* Extentions */; };
 		CEAC0D872A5D078D006C022F /* orderfazApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAC0D862A5D078D006C022F /* orderfazApp.swift */; };
 		CEAC0D892A5D078D006C022F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAC0D882A5D078D006C022F /* ContentView.swift */; };
 		CEAC0D8B2A5D078E006C022F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEAC0D8A2A5D078E006C022F /* Assets.xcassets */; };
@@ -153,7 +152,6 @@
 		CEAC0DF72A5D1A1E006C022F /* DemoKeyboardActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAC0DF62A5D1A1E006C022F /* DemoKeyboardActionHandler.swift */; };
 		CEAC0DF92A5D1B36006C022F /* KeyboardKit in Frameworks */ = {isa = PBXBuildFile; productRef = CEAC0DF82A5D1B36006C022F /* KeyboardKit */; };
 		CEAC0DFB2A5D1D01006C022F /* DemoKeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAC0DFA2A5D1D01006C022F /* DemoKeyboardView.swift */; };
-		CEAC0DFD2A5D1D52006C022F /* DemoLayoutProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAC0DFC2A5D1D52006C022F /* DemoLayoutProvider.swift */; };
 		CEAC0E062A5D363F006C022F /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEAC0E052A5D363F006C022F /* Media.xcassets */; };
 		CEF58D0F2A5E625600C046A1 /* AutoTextScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF58D0E2A5E625600C046A1 /* AutoTextScreen.swift */; };
 		CEF58D122A5E63EF00C046A1 /* ProductScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF58D112A5E63EF00C046A1 /* ProductScreen.swift */; };
@@ -271,8 +269,6 @@
 		CE54F3F72A6799CD00471CA0 /* OrderCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCardView.swift; sourceTree = "<group>"; };
 		CE54F3F92A679C2500471CA0 /* OrderRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderRequest.swift; sourceTree = "<group>"; };
 		CEAA7CFF2A776EE500558188 /* ApiBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiBase.swift; sourceTree = "<group>"; };
-		CEAA7D012A7793DC00558188 /* dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dummy.swift; sourceTree = "<group>"; };
-		CEAA7D082A77B80B00558188 /* Extentions */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Extentions; sourceTree = "<group>"; };
 		CEAC0D832A5D078D006C022F /* orderfaz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = orderfaz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEAC0D862A5D078D006C022F /* orderfazApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = orderfazApp.swift; sourceTree = "<group>"; };
 		CEAC0D882A5D078D006C022F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -290,7 +286,6 @@
 		CEAC0DF42A5D1A0B006C022F /* DemoKeyboardAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoKeyboardAppearance.swift; sourceTree = "<group>"; };
 		CEAC0DF62A5D1A1E006C022F /* DemoKeyboardActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoKeyboardActionHandler.swift; sourceTree = "<group>"; };
 		CEAC0DFA2A5D1D01006C022F /* DemoKeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoKeyboardView.swift; sourceTree = "<group>"; };
-		CEAC0DFC2A5D1D52006C022F /* DemoLayoutProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoLayoutProvider.swift; sourceTree = "<group>"; };
 		CEAC0E052A5D363F006C022F /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		CEF58D0E2A5E625600C046A1 /* AutoTextScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoTextScreen.swift; sourceTree = "<group>"; };
 		CEF58D112A5E63EF00C046A1 /* ProductScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductScreen.swift; sourceTree = "<group>"; };
@@ -536,10 +531,7 @@
 				CEAC0DF42A5D1A0B006C022F /* DemoKeyboardAppearance.swift */,
 				CEAC0DF62A5D1A1E006C022F /* DemoKeyboardActionHandler.swift */,
 				CEAC0DFA2A5D1D01006C022F /* DemoKeyboardView.swift */,
-				CEAA7D082A77B80B00558188 /* Extentions */,
-				CEAC0DFC2A5D1D52006C022F /* DemoLayoutProvider.swift */,
 				CEAC0E052A5D363F006C022F /* Media.xcassets */,
-				CEAA7D012A7793DC00558188 /* dummy.swift */,
 			);
 			path = OrderfazKeyboard;
 			sourceTree = "<group>";
@@ -899,7 +891,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEAC0E062A5D363F006C022F /* Media.xcassets in Resources */,
-				CEAA7D092A77B80B00558188 /* Extentions in Resources */,
+				CEA9B8302A79049000FEA77B /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1079,9 +1071,7 @@
 				CE825BDC2A77BD510043A672 /* Env.swift in Sources */,
 				CE825BDD2A77BD510043A672 /* Extensions.swift in Sources */,
 				CE825BDE2A77BD510043A672 /* ApiBase.swift in Sources */,
-				CEAC0DFD2A5D1D52006C022F /* DemoLayoutProvider.swift in Sources */,
 				CEAC0DF72A5D1A1E006C022F /* DemoKeyboardActionHandler.swift in Sources */,
-				CEAA7D022A7793DC00558188 /* dummy.swift in Sources */,
 				CE825BD62A77BCF10043A672 /* AutoTextResponse.swift in Sources */,
 				CE825BD82A77BCF90043A672 /* AutoTextService.swift in Sources */,
 				CE825BD22A77BCAF0043A672 /* AutoTextScreen.swift in Sources */,

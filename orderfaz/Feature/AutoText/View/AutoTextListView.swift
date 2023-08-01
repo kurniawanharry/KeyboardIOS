@@ -10,6 +10,7 @@ import SwiftUI
 
 struct AutoTextListView: View {
     let autoText:[AutoTextViewModel]
+    let onTap:(_ content:String)-> Void
     
     var body: some View {
         ScrollView(.vertical) {
@@ -17,7 +18,8 @@ struct AutoTextListView: View {
                 AutoTextCardView(
                     name: text.title,
                     content: text.body,
-                    isDefault: text.isDefault
+                    isDefault: text.isDefault,
+                    onTap: onTap
                 )
             }
         }
@@ -27,6 +29,6 @@ struct AutoTextListView: View {
 
 struct AutoTextListView_Previews: PreviewProvider {
     static var previews: some View {
-        AutoTextListView(autoText: [])
+        AutoTextListView(autoText: [],onTap: {content in})
     }
 }

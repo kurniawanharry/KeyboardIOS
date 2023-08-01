@@ -18,10 +18,10 @@ struct ToastView: View {
   var body: some View {
     HStack(alignment: .center, spacing: 12) {
       Image(systemName: style.iconFileName)
-        .foregroundColor(style.themeColor)
+            .foregroundColor(style.themeColor)
       Text(message)
         .font(Font.caption)
-        .foregroundColor(.black)
+        .foregroundColor(style.themeColor)
       
       Spacer(minLength: 10)
       
@@ -34,7 +34,7 @@ struct ToastView: View {
     }
     .padding()
     .frame(minWidth: 0, maxWidth: width)
-    .background(Color(0xFFFAFAFA))
+    .background(style.themeColor.opacity(0.2))
     .cornerRadius(8)
     .padding(.horizontal, 16)
   }
@@ -42,6 +42,6 @@ struct ToastView: View {
 
 struct ToastView_Previews: PreviewProvider {
     static var previews: some View {
-        ToastView(style: .success, message: "Yey", onCancelTapped: {})
+        ToastView(style: .success, message: "Invoice berhasil dibuat!", onCancelTapped: {})
     }
 }

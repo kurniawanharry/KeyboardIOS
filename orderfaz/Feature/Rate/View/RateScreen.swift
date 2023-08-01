@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import KeyboardKit
 import SwiftUI
 
 class locationTemp:ObservableObject {
@@ -30,95 +31,108 @@ struct RateScreen: View {
     @State private var selection: String = "Kg"
     @State private var showRates:Bool = false
     
+    unowned var controller: KeyboardInputViewController
+    
+    @FocusState private var isFocused:Bool
+    
     var body: some View {
-        NavigationView {
-            VStack(alignment: .leading,spacing: 5){
-                
-                Text("Asal").font(.system(size: 16))
-                NavigationLink(
-                    destination:  SearchLocation(isOrigin: true),
-                    label: {
-                    TextField (
-                        "Kelurahan, Kecamatan, Kota, Provinsi, Kode Pos",
-                        text: $loc.origin
-                    )
-                    }).padding(.bottom,10)
-                
-                Text("Tujuan").font(.system(size: 16))
-                NavigationLink(
-                    destination:  SearchLocation(isOrigin: false),
-                    label: {
-                    TextField (
-                        "Kelurahan, Kecamatan, Kota, Provinsi, Kode Pos",
-                        text: $loc.destination
-                    )
-                }).padding(.bottom,10)
-                
-                
-                Text("Berat").font(.system(size: 16))
-                HStack {
-                    TextField (
-                        "Berat",
-                        text: $loc.weight.value
+        VStack {
+            ScrollView(.vertical) {
+                VStack(alignment: .leading,spacing: 5){
+                    
+                    Text("Asal").font(.system(size: 16))
+                    NavigationLink(
+                        destination:  SearchLocation(controller: controller,location: $loc.origin,postalCode: $loc.originPostalCode)) {
+                            TextField (
+                                "Kelurahan, Kecamatan, Kota, Provinsi, Kode Pos",
+                                text: $loc.origin
+                            )
+                        }.padding(.bottom,10)
+                    
+                    
+                    Text("Tujuan").font(.system(size: 16))
+                    NavigationLink(
+                        destination:  SearchLocation(controller: controller, location: $loc.destination, postalCode: $loc.destinationPostalCode)) {
+                            TextField (
+                                "Kelurahan, Kecamatan, Kota, Provinsi, Kode Pos",
+                                text: $loc.destination
+                            ).disabled(false)
+                        }.padding(.bottom,10)
+                    
+                    
+                    Text("Berat").font(.system(size: 16))
+                    HStack {
+                        KeyboardTextField("Berat", text:  $loc.weight.value, controller: controller)
+                            .focused($isFocused, doneButton: doneButton)
+                            .frame(height: 30)
+                            .keyboardType(.numberPad)
                         
-                    )
-                    .keyboardType(.numberPad)
-                    
-                    
-                    Dropdown(
-                        content: ["Kg","g"],
-                        selection: $selection,
-                        activeTint: .primary.opacity(0.1),
-                        inActiveTint:  .primary.opacity(0.05),
-                        dynamic: false
-                    )
-                    .frame(width: 80)
-                    
-                }.padding(.bottom,40)
-                
-                
-                Button("Cek Ongkir") {
-                    if !loc.origin.isEmpty &&
-                        !loc.destination.isEmpty {
-                        rateVM.rate.removeAll()
                         
-                        let request = RateRequest(
-                            destinationPostalCode: loc.destinationPostalCode,
-                            itemPrice:1000,
-                            originPostalCode: loc.originPostalCode,
-                            packageTypeId: 1,
-                            shipmentType: "PICKUP",
-                            weight: weightCalculation(value: Int(loc.weight.value) ?? 1000, type: selection)
+                        Dropdown(
+                            content: ["Kg","g"],
+                            selection: $selection,
+                            activeTint: .primary.opacity(0.1),
+                            inActiveTint:  .primary.opacity(0.05),
+                            dynamic: false
                         )
+                        .frame(width: 80)
                         
-                        Task {
-                            await rateVM.fetch(request: request)
-                            loc.clear()
-                            showRates.toggle()
+                    }.padding(.bottom,40)
+                    
+                    
+                    Button("Cek Ongkir") {
+                        if !loc.origin.isEmpty &&
+                            !loc.destination.isEmpty {
+                            rateVM.rate.removeAll()
+                            
+                            let request = RateRequest(
+                                destinationPostalCode: loc.destinationPostalCode,
+                                itemPrice:1000,
+                                originPostalCode: loc.originPostalCode,
+                                packageTypeId: 1,
+                                shipmentType: "PICKUP",
+                                weight: weightCalculation(value: Int(loc.weight.value) ?? 1000, type: selection)
+                            )
+                            
+                            Task {
+                                await rateVM.fetch(request: request)
+                                loc.clear()
+                                isFocused.toggle()
+                                showRates.toggle()
+                            }
+                            
                         }
-                        
                     }
+                    .buttonStyle(NormalButton())
+                    .sheet(isPresented: $showRates) {
+                        ShippingListView(rates: rateVM.rate)
+                            .presentationDragIndicator(.visible)
+                            .presentationDetents([.medium, .large])
+                    }
+                    Spacer()
                 }
-                .buttonStyle(NormalButton())
-                .sheet(isPresented: $showRates) {
-                    ShippingListView(rates: rateVM.rate)
-                    .presentationDragIndicator(.visible)
-                    .presentationDetents([.medium])
-                }
-                Spacer()
+                .padding(15)
+                .textFieldStyle(.roundedBorder)
+                .frame(alignment: .top)
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationTitle("Cek Ongkir")
+                .toolbarBackground(.visible, for: .navigationBar)
             }
-            .padding(15)
-            .textFieldStyle(.roundedBorder)
-            .frame(alignment: .top)
-            .navigationTitle("Cek Ongkir")
+            .environmentObject(loc)
+            
+            if isFocused {
+                SystemKeyboard(
+                    controller: controller,
+                    autocompleteToolbar: .none
+                )
+                .background(Color(0xE5E5E5))
+            }
         }
-        .environmentObject(loc)
-     
     }
 }
 
 struct RateItem_Previews: PreviewProvider {
     static var previews: some View {
-        RateScreen()
+        RateScreen(controller: KeyboardInputViewController())
     }
 }

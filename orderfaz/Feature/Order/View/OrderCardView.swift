@@ -89,7 +89,10 @@ struct OrderCardView: View {
                     Button {
                         onTap()
                     } label: {
-                        Label("Ingatkan Pelanggan", systemImage: "bell")
+                        HStack {
+                            Image(systemName: "bell")
+                            Text("Ingatkan Pelanggan")
+                        }
                     }  .buttonStyle(NotifButton())
                 }
             }

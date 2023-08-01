@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import KeyboardKit
 import SwiftUI
 
 struct InvoiceScreen: View {
@@ -17,113 +18,136 @@ struct InvoiceScreen: View {
     @State private var selected = 1
     @State private var selectedSorting: Channels = Channels.none
     @State private var toast: Toast? = nil
+    @State private var loading:Bool = false
+    
+    unowned var controller: KeyboardInputViewController
+    
+    @FocusState private var isFocused:Bool
     
     var body: some View {
-        NavigationView {
-            VStack(alignment: .leading,spacing: 10) {
-                Group {
-                    Text("Nama Pelanggan *")
-                    TextField (
-                        "Nama",
-                        text: $username
-                    )
-                }
-                
-                Group {
-                    Text("Nomor Telepon *")
-                    TextField(
-                        "No Telepon",
-                        text: $phoneNumber.value
-                    )
-                }
-                
-                Group {
-                    Text("Email")
-                    TextField(
-                        "Email",
-                        text: $email
-                    )
-                }
-                
-                Group {
-                    Text("Channel")
-                    HStack {
-                        Menu {
-                            Picker("Sort", selection: $selectedSorting) {
-                                ForEach(Channels.allCases) {
-                                    Text($0.title)
+        VStack {
+            ScrollView(.vertical) {
+                VStack(alignment: .leading,spacing: 10) {
+                    Group {
+                        Text("Nama Pelanggan *")
+                        KeyboardTextField("Nama", text: $username, controller: controller)
+                            .focused($isFocused, doneButton: doneButton)
+                            .frame(height: 30)
+                    }
+                    
+                    Group {
+                        Text("Nomor Telepon *")
+                        KeyboardTextField("No Telepon", text: $phoneNumber.value, controller: controller)
+                            .focused($isFocused, doneButton: doneButton)
+                            .frame(height: 30)
+                            .keyboardType(.numberPad)
+                    }
+                    
+                    Group {
+                        Text("Email")
+                        KeyboardTextField("Email", text: $email, controller: controller)
+                            .focused($isFocused, doneButton: doneButton)
+                            .frame(height: 30)
+                    }
+                    
+                    Group {
+                        Text("Channel")
+                        HStack {
+                            Menu {
+                                Picker("Sort", selection: $selectedSorting) {
+                                    ForEach(Channels.allCases) {
+                                        Text($0.title)
+                                    }
                                 }
-                            }
-                        } label: {
-                            HStack {
-                                Text(selectedSorting.title)
-                                    .fontWeight(.medium)
-                                    .foregroundColor(selectedSorting == Channels.none ? .gray : .black)
-                                
-                                Spacer()
-                                
-                                Image(systemName: "chevron.down")
-                                    .fontWeight(.medium)
-                                    .foregroundColor(.gray)
-                            }.padding(5)
+                            } label: {
+                                HStack {
+                                    Text(selectedSorting.title)
+                                        .fontWeight(.medium)
+                                        .foregroundColor(selectedSorting == Channels.none ? .gray : .black)
+                                    
+                                    Spacer()
+                                    
+                                    Image(systemName: "chevron.down")
+                                        .fontWeight(.medium)
+                                        .foregroundColor(.gray)
+                                }
+                                .padding(EdgeInsets(top: 8, leading: 5, bottom: 8, trailing: 5))
                                 .overlay {
-                                    RoundedRectangle(cornerRadius: 5)
-                                        .stroke(.gray,lineWidth: 0.5)
-                                }
+                                        RoundedRectangle(cornerRadius: 5)
+                                            .stroke(.gray,lineWidth: 0.5)
+                                    }
+                            }
+                            if selectedSorting != Channels.none {
+                                KeyboardTextField("Id / Name", text: $channelName, controller: controller)
+                                    .focused($isFocused, doneButton: doneButton)
+                                    .frame(height: 30)
+                            }
                             
-                        }
-                        if selectedSorting != Channels.none {
-                            TextField(
-                                "Id / Name",
-                                text: $channelName
-                            )
                         }
                         
                     }
                     
-                }
-                
-                Group {
-                    Text("Harga Produk *")
-                    TextField(
-                        "Harga Produk",
-                        text: $price.value
-                    )
-                }
-                
-                Group {
-                    Text("Metode Pembayaran")
-                    RadioButtonGroups { selected in
-                        print("Selected Gender is: \(selected)")
+                    Group {
+                        Text("Harga Produk *")
+                        KeyboardTextField("Harga Produk", text: $price.value, controller: controller)
+                            .focused($isFocused, doneButton: doneButton)
+                            .frame(height: 30)
+                            .keyboardType(.numberPad)
                     }
-                }
-                
-                Group {
-                    Button("Buat Invoice")  {
-                        if !username.isEmpty && !phoneNumber.value.isEmpty && !price.value.isEmpty {
-                            Task {
-                                await send()
+                    
+                    Group {
+                        Text("Metode Pembayaran")
+                        RadioButtonGroups { selected in
+                            print("Selected Gender is: \(selected)")
+                        }
+                    }
+                    
+                    Group {
+                        Button  {
+                            if !username.isEmpty && !phoneNumber.value.isEmpty && !price.value.isEmpty {
+                                Task {
+                                    await send()
+                                }
+                            }
+                        } label: {
+                            if loading {
+                                ProgressView()
+                                    .progressViewStyle(.circular)
+                                    .foregroundColor(.white)
+                            } else {
+                                Text("Buat Invoice")
                             }
                         }
-                        
-                    }
-                    .buttonStyle(NormalButton())
-                }.padding(.top,20)
-                
-                
-                Spacer()
-                
+                        .buttonStyle(NormalButton())
+                    }.padding(.top,20)
+                    
+                    
+                    Spacer()
+                    
+                }
+                .font(.system(size: 14))
+                .textFieldStyle(.roundedBorder)
+                .padding(EdgeInsets(top: 10, leading: 20, bottom: 5, trailing: 20))
             }
-            .font(.system(size: 14))
-            .textFieldStyle(.roundedBorder)
-            .padding(EdgeInsets(top: 10, leading: 20, bottom: 5, trailing: 20))
-            .navigationTitle("Invoice")
+            
+            if isFocused {
+                SystemKeyboard(
+                    controller: controller,
+                    autocompleteToolbar: .none
+                )
+                .background(Color(0xE5E5E5))
+            }
         }
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle("Invoice")
+        .toolbarBackground(.visible, for: .navigationBar)
         .toastView(toast: $toast)
     }
     
     
     func send() async {
+        self.isFocused = false
+        
         let additionalFee = [AdditionalFee]()
         
         let productSnapshot = [Products]()
@@ -157,6 +181,10 @@ struct InvoiceScreen: View {
         
         
         do {
+            DispatchQueue.main.async {
+                self.loading = true
+            }
+            
             try await InvoiceService().sendInvoice(invoiceReq: requestOrder) {result in
                 switch result {
                 case .success(let data):
@@ -173,9 +201,13 @@ struct InvoiceScreen: View {
                 case .failure(_ ):
                     toast = Toast(style: .error, message: "Gagal membuat Invoice!.")
                 }
+                
+                DispatchQueue.main.async {
+                    self.loading = false
+                }
             }
         } catch {
-            print(error)
+            toast =  Toast(style: .error, message: "\(error)")
         }
         
     }
@@ -183,6 +215,6 @@ struct InvoiceScreen: View {
 
 struct InvoiceScreen_Previews: PreviewProvider {
     static var previews: some View {
-        InvoiceScreen()
+        InvoiceScreen(controller: KeyboardInputViewController())
     }
 }

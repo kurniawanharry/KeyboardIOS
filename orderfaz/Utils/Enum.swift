@@ -64,3 +64,11 @@ enum ToastStyle {
   case success
   case info
 }
+
+enum SelectionList {
+    case autoText
+    case product
+    case rate
+    case order
+    case invoice
+}

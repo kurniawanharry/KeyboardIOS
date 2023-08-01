@@ -20,7 +20,6 @@ extension Color {
   }
 }
 
-
 extension ToastStyle {
   var themeColor: Color {
     switch self {

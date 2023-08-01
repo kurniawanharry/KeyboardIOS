@@ -12,6 +12,7 @@ struct AutoTextCardView: View {
     let name:String
     let content:String
     let isDefault:Bool
+    let onTap:(_ content:String)-> Void
     var body: some View {
         ZStack(alignment: .leading){
             RoundedRectangle(cornerRadius: 5,style: .continuous).fill(.white).shadow(radius: 0.5)
@@ -25,13 +26,13 @@ struct AutoTextCardView: View {
         }
         .padding(5)
         .onTapGesture {
-               print(content)
+            onTap(content)
             }
     }
 }
 
 struct AutoTextCardView_Previews: PreviewProvider {
     static var previews: some View {
-        AutoTextCardView(name: String(), content: String(),isDefault: true)
+        AutoTextCardView(name: String(), content: String(),isDefault: true,onTap: {content in })
     }
 }

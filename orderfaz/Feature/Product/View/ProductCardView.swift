@@ -13,6 +13,8 @@ struct ProductCardView: View {
     let price:String
     let weight:Int
     let image:String
+    let checkoutUrl:String
+    let onTap:(_ url:String,_ name:String,_ price:String)-> Void
     let imageSize:CGFloat = 50
     var body: some View {
         ZStack(alignment: .leading){
@@ -51,13 +53,13 @@ struct ProductCardView: View {
         }
         .padding(5)
         .onTapGesture {
-               print(name)
+            onTap(checkoutUrl, name, price)
             }
     }
 }
 
 struct ProductCardView_Previews: PreviewProvider {
     static var previews: some View {
-        ProductCardView(name: "",price: "0",weight: 0, image: "")
+        ProductCardView(name: "",price: "0",weight: 0, image: "",checkoutUrl: "",onTap: {data, dat, da in})
     }
 }

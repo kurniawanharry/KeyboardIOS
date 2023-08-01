@@ -37,7 +37,7 @@ class OrderListViewModel:ObservableObject {
                         await self?.fetch(for: term)
                         
                         DispatchQueue.main.async {
-                             self?.loading = false
+                            self?.loading = false
                         }
                     }
                 }
@@ -45,7 +45,7 @@ class OrderListViewModel:ObservableObject {
                 if term.isEmpty {
                     self?.refresh()
                 }
-               
+                
             }.store(in: &subscriptions)
     }
     
@@ -87,7 +87,7 @@ class OrderListViewModel:ObservableObject {
                     DispatchQueue.main.async{
                         self?.hasMore = false
                     }
-                  
+                    
                     print("GAGAL")
                 }
             }
@@ -105,23 +105,21 @@ class OrderListViewModel:ObservableObject {
         }
     }
     
-    func getText(orderId:String, categoryId:Int)  {
+    func getText(orderId:String, categoryId:Int,  completion: @escaping (Result<String, Error>) -> Void)  {
         Task {
             do {
-               try await OrderService().getTextReminder(orderId: orderId, categoryId: categoryId) {result in
+                try await OrderService().getTextReminder(orderId: orderId, categoryId: categoryId) {result in
                     switch result {
                     case .success(let data):
-                        print(data)
+                        completion(.success(data))
                     case.failure(_):
-                        print("GAGL")
+                        print("GAGAL MENGAMBIL DATA")
                     }
-                    
                 }
             } catch {
                 print(error)
             }
         }
-        
     }
 }
 

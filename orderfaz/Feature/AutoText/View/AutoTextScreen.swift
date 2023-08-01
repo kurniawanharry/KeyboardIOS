@@ -15,35 +15,38 @@ struct AutoTextScreen: View {
     unowned var controller: KeyboardInputViewController
     
     @FocusState private var isFocused:Bool
-   
+    
     var body: some View {
-        NavigationView {
-            VStack {
-                if autoVM.loading {
-                    ProgressView()
-                        .progressViewStyle(.circular)
-                } else {
-                    ScrollView(.vertical) {
-                        KeyboardTextField("Type text here...", text: $autoVM.search, controller: controller)
-                            .focused($isFocused, doneButton: doneButton)
-                                        .padding(5).frame(height: 30)
-
-                        
-                        AutoTextListView(
-                            autoText: autoVM.autoTexts
-                        )
+        VStack {
+            KeyboardTextField("Cari Autotext..", text: $autoVM.search, controller: controller)
+                .focused($isFocused, doneButton: doneButton)
+                .frame(height: 30)
+                .padding(EdgeInsets(top: 10, leading: 20, bottom: 5, trailing: 20))
+            
+            if autoVM.loading {
+                ProgressView()
+                    .progressViewStyle(.circular)
+            } else {
+                AutoTextListView(
+                    autoText: autoVM.autoTexts,
+                    onTap: { content in
+                        controller.insertText(content)
                     }
-                    
-                }
-                if isFocused {
-                    SystemKeyboard(
-                        controller: controller,
-                        autocompleteToolbar: .none
-                    )
-                }
+                )
+            }
+            
+            if isFocused {
+                SystemKeyboard(
+                    controller: controller,
+                    autocompleteToolbar: .none
+                )
+                .background(Color(0xE5E5E5))
             }
         }
-     
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle("Auto Text")
+        .toolbarBackground(.visible, for: .navigationBar)
+        
     }
 }
 

@@ -34,13 +34,13 @@ class DemoKeyboardAppearance: StandardKeyboardAppearance {
         var style = super.buttonStyle(for: action, isPressed: isPressed)
         style.cornerRadius = 6
         style.shadow =  KeyboardButtonShadowStyle.standard
-        style.backgroundColor = action.isSystemAction ?  Color(0xFFCBCED5) :  action.isInputAction ? .white : Color(0xFF2563EB)
-        style.foregroundColor = action.isSystemAction ?   Color(0xFF475569)  :  action.isInputAction ? Color(0xFF475569) : .white
+        style.backgroundColor = action.isSystemAction ? action.isPrimaryAction ? Color(0xFF2563EB) : Color(0xFFCBCED5) :  action.isInputAction ? .white : Color(0xFF2563EB)
+        style.foregroundColor = action.isSystemAction ? action.isPrimaryAction ? .white : Color(0xFF475569)  :  action.isInputAction ? Color(0xFF475569) : .white
         return style
     }
     
     override func buttonText(for action: KeyboardAction) -> String? {
-        if action == .keyboardType(.emojis) { return "🤯" }
+        if action == .keyboardType(.emojis) { return "😀" }
         return super.buttonText(for: action)
     }
     
@@ -58,6 +58,4 @@ class DemoKeyboardAppearance: StandardKeyboardAppearance {
         style.callout.textColor = .white
         return style
     }
-    
-   
 }

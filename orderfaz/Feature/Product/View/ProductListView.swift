@@ -13,6 +13,7 @@ struct ProductListView: View {
     let product:[ProductViewModel]
     let loadMore:(() -> Void)
     let loadMoreCondition:Bool
+    let onTap:(_ url:String, _ name:String,_ price:String)-> Void
     
     var body: some View {
         List {
@@ -21,7 +22,9 @@ struct ProductListView: View {
                     name: product.name,
                     price: product.price,
                     weight: product.weight,
-                    image: product.imageUrl
+                    image: product.imageUrl,
+                    checkoutUrl: product.checkoutUrl,
+                    onTap: onTap
                 )
             }
             .listRowSeparator(.hidden)
@@ -45,6 +48,6 @@ struct ProductListView: View {
 
 struct ProductListView_Previews: PreviewProvider {
     static var previews: some View {
-        ProductListView(product: [],loadMore: {},loadMoreCondition: true)
+        ProductListView(product: [],loadMore: {},loadMoreCondition: true,onTap: {data, dat, da in})
     }
 }
